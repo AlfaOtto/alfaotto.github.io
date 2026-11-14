@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Verbena · le jeu de mots cozy</title>
+<meta name="description" content="Retrouve les mots cachés, du facile au boss. Gratuit sur Google Play.">
+<!-- Aperçu quand le lien est partagé (WhatsApp, Messenger, X…) -->
+<meta property="og:title" content="Verbena 🌿 le jeu de mots cozy">
+<meta property="og:description" content="Retrouve les mots cachés, du facile au boss. Gratuit sur Google Play.">
+<meta property="og:image" content="https://alfaotto.github.io/verbena/partage.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://alfaotto.github.io/verbena/">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#273429">
+<link rel="icon" href="icon.png">
+<style>
+@font-face{font-family:Baloo;src:url(baloo800.woff2) format('woff2');font-weight:800}
+@font-face{font-family:Nun;src:url(nunito800.woff2) format('woff2');font-weight:800}
+@font-face{font-family:Nun;src:url(nunito900.woff2) format('woff2');font-weight:900}
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--cream:#FBF6EC;--ink:#26332A;--honey:#E9BC5E;--honeyD:#C98F2E;--sage:#8FA68A}
+html,body{min-height:100%}
+body{min-height:100vh;background:radial-gradient(90% 60% at 50% 28%,#3D5241 0%,#273429 55%,#151C17 100%);color:var(--cream);font-family:Nun,system-ui,sans-serif;font-weight:800;display:flex;justify-content:center;overflow-x:hidden}
+.glow{position:fixed;border-radius:50%;filter:blur(90px);pointer-events:none}
+.wrap{position:relative;width:100%;max-width:460px;padding:56px 16px 40px;display:flex;flex-direction:column;align-items:center;text-align:center}
+.icon{width:132px;height:132px;border-radius:32px;box-shadow:0 0 0 4px rgba(233,188,94,.7),0 24px 60px rgba(0,0,0,.5)}
+h1{font-family:Baloo;font-size:64px;line-height:1;margin-top:28px;letter-spacing:-.5px}
+h1 em{font-style:normal;color:var(--honey)}
+.tag{margin-top:10px;font-size:21px;color:rgba(251,246,236,.85)}
+.tiles{display:flex;gap:10px;margin:34px 0 8px}
+.t{width:58px;height:62px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-family:Baloo;font-size:38px;padding-top:4px;color:#FFFDF7;background:linear-gradient(180deg,#A6BCA0,#7C9377);box-shadow:0 6px 0 #5F7359,0 14px 22px rgba(0,0,0,.25)}
+.t.h{background:linear-gradient(180deg,#F0C973,#C98F2E);box-shadow:0 6px 0 #9C6E1F,0 14px 22px rgba(0,0,0,.25)}
+.t:nth-child(odd){transform:rotate(-5deg)}.t:nth-child(even){transform:rotate(4deg) translateY(-6px)}
+ul{list-style:none;margin-top:30px;width:100%;display:flex;flex-direction:column;gap:12px}
+li{background:rgba(251,246,236,.08);border:1.5px solid rgba(251,246,236,.16);border-radius:20px;padding:14px 18px;font-size:19px;text-align:left;display:flex;gap:12px;align-items:center}
+li b{font-size:24px}
+.play{margin-top:34px;display:block;width:100%;text-decoration:none;font-family:Baloo;font-size:27px;line-height:1.1;color:var(--ink);background:linear-gradient(180deg,#F2CC75,#D9A441);padding:20px 18px 16px;border-radius:999px;box-shadow:0 8px 0 #9C6E1F,0 22px 40px rgba(0,0,0,.4);transition:transform .12s,box-shadow .12s}
+.play small{display:block;font-family:Nun;font-weight:900;font-size:15px;opacity:.75;margin-top:3px}
+.play:active{transform:translateY(6px);box-shadow:0 2px 0 #9C6E1F,0 10px 20px rgba(0,0,0,.4)}
+.note{margin-top:22px;font-size:15px;color:rgba(251,246,236,.6)}
+</style>
+</head>
+<body>
+<div class="glow" style="left:-160px;top:80px;width:420px;height:420px;background:rgba(143,166,138,.3)"></div>
+<div class="glow" style="right:-180px;bottom:40px;width:420px;height:420px;background:rgba(233,188,94,.18)"></div>
+<main class="wrap">
+  <img class="icon" src="icon.png" alt="Logo Verbena">
+  <h1>Joue à <em>Verbena</em></h1>
+  <p class="tag" id="tag">Le jeu de mots cozy 🌿</p>
+  <div class="tiles" aria-hidden="true"><div class="t">V</div><div class="t">E</div><div class="t h">R</div><div class="t">B</div><div class="t">E</div></div>
+  <ul id="pts">
+    <li><b>🧩</b><span>Retrouve les mots cachés, du facile au boss</span></li>
+    <li><b>🌍</b><span>9 langues</span></li>
+    <li><b>☕</b><span>Une pause douce, à ton rythme</span></li>
+  </ul>
+  <a class="play" id="play" href="https://play.google.com/store/apps/details?id=com.verbena.game&amp;referrer=utm_source%3Dpartage">▶ Jouer gratuitement<small>sur Google Play</small></a>
+  <p class="note" id="note">Android · gratuit</p>
+</main>
+<script>
+// Texte en anglais pour les visiteurs non francophones
+try{
+  const l=(navigator.language||'fr').slice(0,2);
+  if(l!=='fr'){
+    document.documentElement.lang='en';
+    document.querySelector('h1').innerHTML='Play <em>Verbena</em>';
+    document.getElementById('tag').textContent='The cozy word game 🌿';
+    const s=document.querySelectorAll('#pts span');
+    s[0].textContent='Find the hidden words, from easy to boss';
+    s[1].textContent='9 languages';
+    s[2].textContent='A calm break, at your own pace';
+    document.getElementById('play').innerHTML='▶ Play for free<small>on Google Play</small>';
+    document.getElementById('note').textContent='Android · free';
+  }
+}catch(e){}
+</script>
+</body>
+</html>
